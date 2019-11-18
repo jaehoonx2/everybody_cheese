@@ -21,8 +21,9 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           children: <Widget>[
+            SizedBox(height: 15.0),
             Image.asset('assets/logo_text.png'),
-            SizedBox(height: 10.0),
+            SizedBox(height: 15.0),
             _EmailPasswordForm(),
             SizedBox(height: 10.0),
             _GoogleSignInSection(),
