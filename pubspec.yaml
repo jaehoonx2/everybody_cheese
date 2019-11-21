@@ -27,18 +27,21 @@ flutter:
   uses-material-design: true
 
   assets:
-  - assets/logo.png
-  - assets/logo_text.png
-  - assets/paris.png
+    - assets/logo.png
+    - assets/logo_text.png
+    - assets/paris.png
 
   fonts:
-   - family: RoundedElegance
-     fonts:
-       - asset: fonts/RoundedElegance.ttf
+    - family: RoundedElegance
+      fonts:
+        - asset: fonts/RoundedElegance.ttf
 
-   - family: HangeulNuri
-     fonts:
-       - asset: fonts/HangeulNuriR.ttf
-         weight: 400
-       - asset: fonts/HangeulNuriB.ttf
-         weight: 700
+    - family: HangeulNuri
+      fonts:
+        - asset: fonts/HangeulNuriR.ttf
+          weight: 400
+        - asset: fonts/HangeulNuriB.ttf
+          weight: 700
+
+module:
+  androidX: true

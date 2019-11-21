@@ -19,13 +19,13 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
           children: <Widget>[
             SizedBox(height: 15.0),
-            Image.asset('assets/logo_text.png'),
+            Image.asset('assets/logo_text.png', height: MediaQuery.of(context).size.height / 3),
             SizedBox(height: 15.0),
             _EmailPasswordForm(),
-            SizedBox(height: 10.0),
+            SizedBox(height: 30.0),
             _GoogleSignInSection(),
             SizedBox(height: 10.0),
             _AnonymouslySignInSection(),
@@ -76,17 +76,8 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
             obscureText: true,
           ),
           ButtonBar(
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              SignInButtonBuilder(
-                text: 'Cancel',
-                icon: Icons.cancel,
-                onPressed: () {
-                  _emailController.clear();
-                  _passwordController.clear();
-                },
-                backgroundColor: Colors.cyan,
-                width: 100.0,
-              ),
               SignInButtonBuilder(
                 text: 'Sign Up',
                 icon: Icons.person_add,
@@ -97,7 +88,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                   );
                 },
                 backgroundColor: Colors.cyan,
-                width: 100.0,
+                width: 110.0,
               ),
               SignInButtonBuilder(
                 text: 'Sign In',
@@ -108,7 +99,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
                   }
                 },
                 backgroundColor: Colors.cyan,
-                width: 100.0,
+                width: 110.0,
               ),
             ],
           ),

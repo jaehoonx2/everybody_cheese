@@ -27,10 +27,11 @@ class RegisterPageState extends State<RegisterPage> {
           child: Form(
             key: _formKey,
             child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 24.0),
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
 //          crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Image.asset('assets/logo.png'),
+                SizedBox(height: 15.0),
+                Image.asset('assets/logo.png', height: MediaQuery.of(context).size.height / 4),
                 Text(
                     'Welcome to\nEVERYBODY CHEESE!',
                     textAlign: TextAlign.center,
@@ -39,7 +40,7 @@ class RegisterPageState extends State<RegisterPage> {
                         fontSize: 30.0,
                     ),
                 ),
-                SizedBox(height: 10.0),
+                SizedBox(height: 15.0),
                 TextFormField(
                   controller: _emailController,
                   decoration: const InputDecoration(labelText: 'Email'),
@@ -73,17 +74,7 @@ class RegisterPageState extends State<RegisterPage> {
                           Navigator.pop(context);
                         },
                         backgroundColor: Colors.cyan,
-                        width: 100.0,
-                      ),
-                      SignInButtonBuilder(
-                        text: 'Cancel',
-                        icon: Icons.cancel,
-                        onPressed: () {
-                          _emailController.clear();
-                          _passwordController.clear();
-                        },
-                        backgroundColor: Colors.cyan,
-                        width: 100.0,
+                        width: 110.0,
                       ),
                       SignInButtonBuilder(
                         text: 'Sign Up',
@@ -94,7 +85,7 @@ class RegisterPageState extends State<RegisterPage> {
                           }
                         },
                         backgroundColor: Colors.cyan,
-                        width: 100.0,
+                        width: 110.0,
                       ),
                     ],
                   ),
