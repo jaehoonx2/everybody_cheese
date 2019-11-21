@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:everybody_cheese/home.dart';
 import 'package:everybody_cheese/photo.dart';
-import 'package:everybody_cheese/upload.dart';
+import 'package:everybody_cheese/add.dart';
 import 'package:everybody_cheese/search.dart';
 import 'package:everybody_cheese/setting.dart';
 
@@ -33,7 +33,7 @@ class _AppState extends State<App> {
       children: <Widget>[
         HomePage(),
         PhotoPage(),
-        UploadPage(),
+        AddPage(),
         SearchPage(),
         SettingPage(),
       ],

@@ -10,16 +10,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '홈',
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold
-          ),
-        ),
-        backgroundColor: Colors.white,
-      ),
+//      appBar: AppBar(
+//        title: const Text('홈', style: TextStyle(fontFamily: 'HangeulNuri', color: Colors.black),),
+//        backgroundColor: Colors.white,
+//      ),
       body: SafeArea(
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
@@ -28,7 +22,7 @@ class _HomePageState extends State<HomePage> {
               Column(
                 children: <Widget>[
                   SizedBox(
-                    height: (MediaQuery.of(context).size.width / 3),
+                    height: (MediaQuery.of(context).size.height / 4),
                     child: Image.asset('assets/logo.png'),
                   ),
                   SizedBox(height: 10.0),
