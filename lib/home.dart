@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+List<Widget> showList;
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -10,15 +12,11 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(
-//        title: const Text('홈', style: TextStyle(fontFamily: 'HangeulNuri', color: Colors.black),),
-//        backgroundColor: Colors.white,
-//      ),
       body: SafeArea(
           child: ListView(
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             children: <Widget>[
-              SizedBox(height: 80.0),
+              SizedBox(height: 10.0),
               Column(
                 children: <Widget>[
                   SizedBox(
@@ -26,25 +24,20 @@ class _HomePageState extends State<HomePage> {
                     child: Image.asset('assets/logo.png'),
                   ),
                   SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'EVERYBODY CHEESE! ',
-                        style: TextStyle(
-                          fontFamily: 'RoundedElegance',
-                          fontSize: 20.0,
-                        ),
-                      ),
-                      Text(
-                        '공지사항',
-                        style: TextStyle(
-                          fontFamily: 'HangeulNuri',
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'EVERYBODY CHEESE! ',
+                    style: TextStyle(
+                      fontFamily: 'RoundedElegance',
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  Text(
+                    '베스트 사진전',
+                    style: TextStyle(
+                      fontFamily: 'HangeulNuri',
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
                 ],
               ),

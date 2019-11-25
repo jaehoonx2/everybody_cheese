@@ -2,6 +2,35 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- Webview-Flutter Section-->
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
+    <!-- End of the Webview-Flutter Section -->
+
+    <!-- Image Picker Section -->
+	<key>NSCameraUsageDescription</key>
+	<string>Used to demonstrate image picker plugin</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used to capture audio for image picker plugin</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used to demonstrate image picker plugin</string>
+    <!-- End of the Image Picker Section -->
+
+    <!-- Google Sign-in Section -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <!-- TODO Replace this value: -->
+                <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+            	<string>com.googleusercontent.apps.459989513500-9p5b3tdfmj4ircvcn4tmtbq74rakgtlo</string>
+            </array>
+        </dict>
+    </array>
+    <!-- End of the Google Sign-in Section -->
 	<key>NSCameraUsageDescription</key>
 	<string>Used to demonstrate image picker plugin</string>
 	<key>NSMicrophoneUsageDescription</key>

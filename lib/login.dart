@@ -16,18 +16,39 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           children: <Widget>[
-            SizedBox(height: 15.0),
-            Image.asset('assets/logo_text.png', height: MediaQuery.of(context).size.height / 3),
-            SizedBox(height: 15.0),
+            Image.asset('assets/logo_text.png',
+                height: MediaQuery.of(context).size.height / 3),
             _EmailPasswordForm(),
-            SizedBox(height: 30.0),
-            _GoogleSignInSection(),
             SizedBox(height: 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Need an accont?'),
+                FlatButton(
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      color: theme.primaryColor,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 10.0),
+            _GoogleSignInSection(),
             _AnonymouslySignInSection(),
           ],
         ),
@@ -47,6 +68,7 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
   final TextEditingController _passwordController = TextEditingController();
   bool _success;
   String _userEmail;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -75,21 +97,9 @@ class _EmailPasswordFormState extends State<_EmailPasswordForm> {
             },
             obscureText: true,
           ),
-          ButtonBar(
-            mainAxisSize: MainAxisSize.max,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              SignInButtonBuilder(
-                text: 'Sign Up',
-                icon: Icons.person_add,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RegisterPage()),
-                  );
-                },
-                backgroundColor: Colors.cyan,
-                width: 110.0,
-              ),
               SignInButtonBuilder(
                 text: 'Sign In',
                 icon: Icons.arrow_forward,
@@ -143,12 +153,13 @@ class _GoogleSignInSection extends StatefulWidget {
 class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
   bool _success;
   String _userID;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 5.0),
           alignment: Alignment.center,
           child: SignInButton(
             Buttons.Google,
@@ -166,7 +177,7 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
   void _signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
-    await googleUser.authentication;
+        await googleUser.authentication;
     final AuthCredential credential = GoogleAuthProvider.getCredential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
@@ -201,13 +212,14 @@ class _AnonymouslySignInSection extends StatefulWidget {
 class _AnonymouslySignInSectionState extends State<_AnonymouslySignInSection> {
   bool _success;
   String _userID;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 5.0),
           alignment: Alignment.center,
           child: SignInButtonBuilder(
             text: 'Sign in anonymously',

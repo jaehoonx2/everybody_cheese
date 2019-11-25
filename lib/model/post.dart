@@ -6,7 +6,8 @@ class Post {
   final String imgURL;
   final String location;
   final String description;
-  final Timestamp created;
+  final String camera;
+  final Timestamp taken;
   final int votes;
   final List<dynamic> clickedID;
 
@@ -24,7 +25,8 @@ class Post {
         imgURL = map['imgURL'],
         location = map['location'],
         description = map['description'],
-        created = map['created'],
+        camera = map['camera'],
+        taken = map['taken'],
         votes = map['votes'],
         clickedID = map['clickedID'];
 
