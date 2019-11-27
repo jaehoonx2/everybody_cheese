@@ -22,29 +22,6 @@ class DetailPage extends StatelessWidget {
           style: TextStyle(fontFamily: 'HangeulNuri', color: Colors.black),
         ),
         backgroundColor: Colors.white,
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.create), onPressed: () async {
-            final FirebaseUser currentUser = await _auth.currentUser();
-            if(currentUser.uid == post.authorID) {
-//              Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                    builder: (context) => EditPage(post: post,),
-//                  )
-//              );
-            } else {
-//              Fluttertoast.showToast(
-//                  msg: "WRONG ACCESS : Only author can edit!",
-//                  toastLength: Toast.LENGTH_SHORT,
-//                  gravity: ToastGravity.CENTER,
-//                  timeInSecForIos: 1,
-//                  backgroundColor: Colors.red,
-//                  textColor: Colors.white,
-//                  fontSize: 16.0
-//              );
-            }
-          }),
-        ],
       ),
       body: _buildBody(context),
     );
