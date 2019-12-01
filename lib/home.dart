@@ -1,7 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'model/post.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class HomePage extends StatefulWidget {
   @override
@@ -55,6 +58,56 @@ class _HomePageState extends State<HomePage> {
                   children: <Widget>[
                     Container(
                       child: Image.network(post.imgURL, fit: BoxFit.cover, width: 1000.0,),
+                    ),
+                    FittedBox(
+                      child: Row(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              IconButton(
+                                  icon: Icon(Icons.favorite),
+                                  color: Colors.red,
+                                  onPressed: () async {
+                                    bool alreadySaved = false;
+
+                                    final FirebaseUser currentUser = await _auth.currentUser();
+                                    String uuid = currentUser.uid;
+
+                                    for(int idx = 0; idx < post.clickedID.length; idx++) {
+                                      if(uuid == post.clickedID[idx]){
+                                        alreadySaved = true;
+                                        break;
+                                      }
+                                    }
+
+                                    if(alreadySaved == false) {   // 처음 누르는 거면
+                                      var list = List<dynamic>();
+                                      list.add(uuid);
+
+                                      post.reference.updateData({
+                                        'votes': FieldValue.increment(1),
+                                        'clickedID' : FieldValue.arrayUnion(list),
+                                      });
+
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(content: Text('I LIKE IT!!!')));
+                                    } else {                      // 아니면
+                                      Scaffold.of(context).showSnackBar(
+                                          SnackBar(content: Text('You can only do it once!!!')));
+                                    }
+                                  }),
+                              Text(
+                                  post.votes.toString(),
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     Positioned(
                       bottom: 0.0,
@@ -112,14 +165,14 @@ class _HomePageState extends State<HomePage> {
                     'EVERYBODY CHEESE! ',
                     style: TextStyle(
                       fontFamily: 'RoundedElegance',
-                      fontSize: 20.0,
+                      fontSize: 25.0,
                     ),
                   ),
                   Text(
-                    '명예의 전당',
+                    '베스트 사진전',
                     style: TextStyle(
                       fontFamily: 'HangeulNuri',
-                      fontSize: 20.0,
+                      fontSize: 25.0,
                       fontWeight: FontWeight.w400,
                     ),
                   ),
@@ -127,6 +180,16 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 50.0),
               _buildBody(context),
+              SizedBox(height: 50.0),
+              Text(
+                '가장 멋진 사진에 투표하세요!',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'HangeulNuri',
+                  fontSize: 28.0,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ],
           )
       ),

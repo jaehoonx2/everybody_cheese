@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -23,10 +22,11 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           children: <Widget>[
+            SizedBox(height: 20.0),
             Image.asset('assets/logo_text.png',
                 height: MediaQuery.of(context).size.height / 3),
             _EmailPasswordForm(),
-            SizedBox(height: 10.0),
+            SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

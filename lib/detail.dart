@@ -71,7 +71,7 @@ class DetailPage extends StatelessWidget {
                       children: <Widget>[
                         Icon(
                           Icons.location_on,
-                          size: 15.0,
+                          size: 20.0,
                         ),
                         Flexible(
                           child: Text(

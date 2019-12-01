@@ -96,11 +96,11 @@ class _UploadPageState extends State<UploadPage> {
   var _finish;
   FirebaseUser user;
 
-  // Start of the geolocator
-  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-
   Position _currentPosition;
   String _currentAddress;
+
+  // Start of the geolocator
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
 
   _getCurrentLocation() {
     geolocator
