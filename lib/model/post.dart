@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Post {
   final String docID;
   final String authorID;
+  final String userEmail;
   final String imgURL;
   final String location;
   final double longitude;
@@ -18,6 +19,7 @@ class Post {
   Post.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['docID'] != null),
         assert(map['authorID'] != null),
+        assert(map['userEmail'] != null),
         assert(map['imgURL'] != null),
         assert(map['location'] != null),
         assert(map['longitude'] != null),
@@ -26,6 +28,7 @@ class Post {
         assert(map['votes'] != null),
         docID = map['docID'],
         authorID = map['authorID'],
+        userEmail = map['userEmail'],
         imgURL = map['imgURL'],
         location = map['location'],
         longitude = map['longitude'],

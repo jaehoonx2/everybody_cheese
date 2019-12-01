@@ -71,16 +71,20 @@ class DetailPage extends StatelessWidget {
                       children: <Widget>[
                         Icon(
                           Icons.location_on,
-                          size: 25.0,
+                          size: 15.0,
                         ),
-                        Text(
-                          post.location,
-                          maxLines: 2,
-                          style: TextStyle(
-                            fontFamily: 'HanguelNuri',
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
+                        Flexible(
+                          child: Text(
+                            post.location,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            maxLines: 2,
+                            style: TextStyle(
+                              fontFamily: 'HanguelNuri',
+                              fontSize: 15.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
@@ -132,7 +136,7 @@ class DetailPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    post.authorID,
+                    post.userEmail,
                     style: theme.textTheme.caption,
                   ),
                 ],

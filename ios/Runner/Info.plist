@@ -13,14 +13,6 @@
     <string>This app needs access to location when open and in the background.</string>
     <!-- End of the Geolocator Section -->
 
-
-    <!-- Webview-Flutter Section-->
-    <!-- Google-Map-Flutter Section-->
-    <key>io.flutter.embedded_views_preview</key>
-    <string>YES</string>
-    <!-- End of the Google-Map-Flutter Section -->
-    <!-- End of the Webview-Flutter Section -->
-
     <!-- Image Picker Section -->
 	<key>NSCameraUsageDescription</key>
 	<string>Used to demonstrate image picker plugin</string>
@@ -30,7 +22,6 @@
 	<string>Used to demonstrate image picker plugin</string>
     <!-- End of the Image Picker Section -->
 
-    <!-- Put me in the [my_project]/ios/Runner/Info.plist file -->
     <!-- Google Sign-in Section -->
     <key>CFBundleURLTypes</key>
     <array>
@@ -39,7 +30,6 @@
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <!-- TODO Replace this value: -->
                 <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
                 <string>com.googleusercontent.apps.459989513500-9p5b3tdfmj4ircvcn4tmtbq74rakgtlo</string>
             </array>

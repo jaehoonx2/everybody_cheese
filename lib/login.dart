@@ -49,7 +49,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 10.0),
             _GoogleSignInSection(),
-            _AnonymouslySignInSection(),
           ],
         ),
       ),
@@ -188,71 +187,6 @@ class _GoogleSignInSectionState extends State<_GoogleSignInSection> {
     assert(user.displayName != null);
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
-
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
-    setState(() {
-      if (user != null) {
-        _success = true;
-        _userID = user.uid;
-
-        Navigator.pop(context);
-      } else {
-        _success = false;
-      }
-    });
-  }
-}
-
-class _AnonymouslySignInSection extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _AnonymouslySignInSectionState();
-}
-
-class _AnonymouslySignInSectionState extends State<_AnonymouslySignInSection> {
-  bool _success;
-  String _userID;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 5.0),
-          alignment: Alignment.center,
-          child: SignInButtonBuilder(
-            text: 'Sign in anonymously',
-            icon: Icons.person,
-            onPressed: () async {
-              _signInAnonymously();
-            },
-            backgroundColor: Colors.blueGrey[700],
-          ),
-        ),
-      ],
-    );
-  }
-
-  // Example code of how to sign in anonymously.
-  void _signInAnonymously() async {
-    final FirebaseUser user = (await _auth.signInAnonymously()).user;
-    assert(user != null);
-    assert(user.isAnonymous);
-    assert(!user.isEmailVerified);
-    assert(await user.getIdToken() != null);
-    if (Platform.isIOS) {
-      // Anonymous auth doesn't show up as a provider on iOS
-      assert(user.providerData.isEmpty);
-    } else if (Platform.isAndroid) {
-      // Anonymous auth does show up as a provider on Android
-      assert(user.providerData.length == 1);
-      assert(user.providerData[0].providerId == 'firebase');
-      assert(user.providerData[0].uid != null);
-      assert(user.providerData[0].displayName == null);
-      assert(user.providerData[0].photoUrl == null);
-      assert(user.providerData[0].email == null);
-    }
 
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);

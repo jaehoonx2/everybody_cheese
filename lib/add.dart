@@ -288,6 +288,7 @@ class _UploadPageState extends State<UploadPage> {
                     'camera': camController.text,
                     'imgURL': _imageURL,
                     'docID': docReferance.documentID,
+                    'userEmail': user.email,
                     'authorID': user.uid,
                     'taken': Timestamp.fromDate(_takenDate),
                     'votes': 0,
@@ -366,6 +367,8 @@ class _UploadPageState extends State<UploadPage> {
                       Flexible(
                         child: Text(
                           _currentPosition != null ? _currentAddress : 'Select Location',
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
                           style: TextStyle(
                             fontFamily: 'RoundedElegance',
                             fontSize: 10.0,

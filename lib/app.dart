@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:everybody_cheese/home.dart';
-import 'package:everybody_cheese/photo.dart';
+import 'package:everybody_cheese/mypage.dart';
 import 'package:everybody_cheese/add.dart';
 import 'package:everybody_cheese/search.dart';
 import 'package:everybody_cheese/setting.dart';
@@ -32,7 +32,7 @@ class _AppState extends State<App> {
       onPageChanged: (index) => pageChanged(index),
       children: <Widget>[
         HomePage(),
-        PhotoPage(),
+        MyPage(),
         AddPage(),
         SearchPage(),
         SettingPage(),

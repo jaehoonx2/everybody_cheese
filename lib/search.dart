@@ -45,10 +45,7 @@ class _SearchPageState extends State<SearchPage> {
                   text: '지역명으로 찾기',
                   icon: Icons.search,
                   onPressed: () {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(builder: (context) => MapSample()),
-//                    );
+
                   },
                   backgroundColor: Colors.blue,
                   width: 160.0,
@@ -58,10 +55,7 @@ class _SearchPageState extends State<SearchPage> {
                   text: '내 주변 명소 찾기',
                   icon: Icons.my_location,
                   onPressed: () {
-//                    Navigator.push(
-//                      context,
-//                      MaterialPageRoute(builder: (context) => MapSample()),
-//                    );
+
                   },
                   backgroundColor: Colors.blue,
                   width: 160.0,

@@ -6,12 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-class PhotoPage extends StatefulWidget {
+class MyPage extends StatefulWidget {
   @override
-  _PhotoPageState createState() => _PhotoPageState();
+  _MyPageState createState() => _MyPageState();
 }
 
-class _PhotoPageState extends State<PhotoPage> {
+class _MyPageState extends State<MyPage> {
   var _finish;
   var stream;
   FirebaseUser user;
@@ -90,13 +90,16 @@ class _PhotoPageState extends State<PhotoPage> {
                         Row(
                           children: <Widget>[
                             Icon(Icons.location_on, color: theme.primaryColor,),
-                            Text(
-                              post.location,
-                              style: TextStyle(
-                                fontFamily: 'HangeulNuri',
-                                fontSize: 20.0,
+                            Flexible(
+                              child: Text(
+                                post.location,
+                                overflow: TextOverflow.ellipsis,
+                                softWrap: true,
+                                style: TextStyle(
+                                  fontFamily: 'HangeulNuri',
+                                  fontSize: 10.0,
+                                ),
                               ),
-                              maxLines: 1,
                             ),
                           ],
                         ),

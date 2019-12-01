@@ -96,19 +96,6 @@ class _SettingPageState extends State<SettingPage> {
                               .width / 3),
                           child: Image.asset('assets/logo.png')),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          '닉네임을 등록하세요',
-                          style: TextStyle(
-                            fontFamily: 'HangeulNuri',
-                            color: Colors.black,
-                            fontSize: 10.0,
-                          ),
-                        ),
-                      ],
-                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                       child: Column(
@@ -131,7 +118,7 @@ class _SettingPageState extends State<SettingPage> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              user.email != null ? user.email : 'anonymous',
+                              user.email,
                               style: TextStyle(
                                 fontFamily: 'HangeulNuri',
                                 color: Colors.black,
@@ -175,28 +162,6 @@ class _SettingPageState extends State<SettingPage> {
                 ),
               ),
               SizedBox(height: 30.0),
-              GestureDetector(
-                child: Card(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FlatButton(
-                        child: Text(
-                          '프로필 사진 변경',
-                          style: TextStyle(
-                            fontFamily: 'HangeulNuri',
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w400,
-                            color: theme.primaryColor,
-                          ),
-                        ),
-                        onPressed: null,
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () async {},
-              ),
               GestureDetector(
                 child: Card(
                   child: Row(

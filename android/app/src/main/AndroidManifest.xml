@@ -25,11 +25,6 @@
                 android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
                 android:value="true" />
 
-            <!-- Start of google_maps_flutter -->
-            <meta-data android:name="com.google.android.geo.API_KEY"
-                android:value="AIzaSyAlIfxVG_5_XUbqWbRMBZ8D-0v_2UX2sy0"/>
-            <!-- End of google_maps_flutter -->
-            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
