@@ -6,6 +6,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- End of geolocator permission -->
 
+    <!-- Start of flutter_google_place -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- End of flutter_google_place -->
+
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="everybody_cheese"
@@ -17,14 +21,15 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
+            <meta-data
+                android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
+                android:value="true" />
 
             <!-- Start of google_maps_flutter -->
             <meta-data android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyAlIfxVG_5_XUbqWbRMBZ8D-0v_2UX2sy0"/>
             <!-- End of google_maps_flutter -->
-            <meta-data
-                android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
-                android:value="true" />
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

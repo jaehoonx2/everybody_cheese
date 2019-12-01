@@ -1,22 +1,27 @@
 import 'dart:io';
 import 'dart:async';
 
-import 'package:flutter/material.dart' as prefix0;
-import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:device_info/device_info.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:path/path.dart' as Path;
+import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_webservice/places.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:path/path.dart' as Path;
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 DateTime _takenDate = DateTime.now();
 final formatter = new DateFormat('yyyy.MM.dd (E)');
+
+const kGoogleApiKey = "AIzaSyAlIfxVG_5_XUbqWbRMBZ8D-0v_2UX2sy0";
+GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class AddPage extends StatelessWidget {
   @override
@@ -128,6 +133,30 @@ class _UploadPageState extends State<UploadPage> {
   }
   // End of the geolocator
 
+  // Start of the flutter_google_places
+  Future<Null> displayPrediction(Prediction p) async {
+    if (p != null) {
+      PlacesDetailsResponse detail =
+      await _places.getDetailsByPlaceId(p.placeId);
+
+      var placeId = p.placeId;
+      double lat = detail.result.geometry.location.lat;
+      double lng = detail.result.geometry.location.lng;
+
+      var address = await Geocoder.local.findAddressesFromQuery(p.description);
+
+      setState(() {
+        _currentAddress = p.description;
+        _currentPosition = Position(latitude: lat, longitude: lng);
+      });
+
+//      print(p.description);
+//      print(lat);
+//      print(lng);
+    }
+  }
+  // End of the flutter_google_places
+
   final descController = TextEditingController();
   final camController = TextEditingController();
 
@@ -151,6 +180,9 @@ class _UploadPageState extends State<UploadPage> {
       });
 
       _getCurrentLocation();
+    } else {
+      _currentPosition = null;
+      _currentAddress = null;
     }
 
     _getUserInfo().then((finish) {
@@ -301,76 +333,68 @@ class _UploadPageState extends State<UploadPage> {
               padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
                 children: <Widget>[
-                  Column(
+                  Text(
+                    '어디서 찍으셨나요?',
+                    style: TextStyle(
+                      fontFamily: 'HangeulNuri',
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Row(
                     children: <Widget>[
-                      Text(
-                        '어디서 찍으셨나요?',
-                        style: TextStyle(
-                          fontFamily: 'RoundedElegance',
-                          fontSize: 10.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Padding(
-                        padding: prefix0.EdgeInsets.only(left: 30.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            SignInButtonBuilder(
-                              mini: true,
-                              icon: _mode == 0 ? Icons.my_location : Icons.location_on,
-                              text: 'Location',
-                              backgroundColor: Colors.blue,
-                              onPressed: () async {
-//                                if(_mode == 0)
-                                  await _getCurrentLocation();
-//                                else {
-//
-//                                }
+                      SignInButtonBuilder(
+                          mini: true,
+                          icon: Icons.location_on,
+                          text: 'Location',
+                          backgroundColor: Colors.blue,
+                          onPressed: () async {
+                            if(_mode == 0)
+                              await _getCurrentLocation();
+                            else {
+                              // IOS --> error occured
+                              if(Platform.isAndroid){
+                                Prediction p = await PlacesAutocomplete.show(
+                                    context: context, apiKey: kGoogleApiKey);
+                                displayPrediction(p);
+                              } else {
+                                await _getCurrentLocation();
                               }
-                            ),
-                            Text(
-                              _currentPosition != null ? _currentAddress : (_mode == 0 ? 'Current Location' : 'Select Location'),
-                              style: TextStyle(
-                                fontFamily: 'RoundedElegance',
-                                fontSize: 10.0,
-                              ),
-                            ),
-                          ],
+                            }
+                          }
+                      ),
+                      Flexible(
+                        child: Text(
+                          _currentPosition != null ? _currentAddress : 'Select Location',
+                          style: TextStyle(
+                            fontFamily: 'RoundedElegance',
+                            fontSize: 10.0,
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(width: 20.0,),
-                  Column(
+                  Text(
+                    '언제 찍으셨나요?',
+                    style: TextStyle(
+                      fontFamily: 'HangeulNuri',
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Row(
                     children: <Widget>[
+                      SignInButtonBuilder(
+                          mini: true,
+                          icon: Icons.calendar_today,
+                          text: 'Calendar',
+                          backgroundColor: Colors.blue,
+                          onPressed: () => _setTakenDate(context)),
                       Text(
-                        '언제 찍으셨나요?',
+                        formatter.format(_takenDate),
                         style: TextStyle(
                           fontFamily: 'RoundedElegance',
                           fontSize: 10.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Padding(
-                        padding: prefix0.EdgeInsets.only(left: 30.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            SignInButtonBuilder(
-                                mini: true,
-                                icon: Icons.calendar_today,
-                                text: 'Calendar',
-                                backgroundColor: Colors.blue,
-                                onPressed: () => _setTakenDate(context)),
-                            Text(
-                              formatter.format(_takenDate),
-                              style: TextStyle(
-                                fontFamily: 'RoundedElegance',
-                                fontSize: 10.0,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                     ],
