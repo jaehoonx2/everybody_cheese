@@ -36,6 +36,7 @@ flutter:
     - assets/logo_text.png
     - assets/bg_upload.png
     - assets/bg_search.png
+    - assets/404.jpeg
 
   fonts:
     - family: RoundedElegance
