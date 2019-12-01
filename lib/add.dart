@@ -32,7 +32,7 @@ class AddPage extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           Image.asset(
-            'assets/paris.png',
+            'assets/bg_upload.png',
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             fit: BoxFit.fill,

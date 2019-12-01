@@ -1,9 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.handong.everybody_cheese">
 
-    <!-- geolocator permission -->
+    <!-- Start of geolocator permission -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- End of geolocator permission -->
 
     <application
         android:name="io.flutter.app.FlutterApplication"
@@ -17,10 +18,10 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
 
-            <!-- google_maps_flutter -->
+            <!-- Start of google_maps_flutter -->
             <meta-data android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyAlIfxVG_5_XUbqWbRMBZ8D-0v_2UX2sy0"/>
-
+            <!-- End of google_maps_flutter -->
             <meta-data
                 android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
                 android:value="true" />

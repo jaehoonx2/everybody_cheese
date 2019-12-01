@@ -20,7 +20,7 @@ class _SearchPageState extends State<SearchPage> {
         children: <Widget>[
           ConstrainedBox(
             child: Image.asset(
-              'assets/zaq.png',
+              'assets/bg_search.png',
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               fit: BoxFit.fitHeight,
