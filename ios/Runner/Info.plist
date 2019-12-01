@@ -2,11 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- Location Section -->
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>I need it</string>
+    <!-- Geolocator Section -->
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Because</string>
+    <string>This app needs access to location when open.</string>
+
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app needs access to location when in the background.</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open and in the background.</string>
+    <!-- End of the Geolocator Section -->
+
 
     <!-- Webview-Flutter Section-->
     <!-- Google-Map-Flutter Section-->

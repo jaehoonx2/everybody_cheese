@@ -75,9 +75,10 @@ class DetailPage extends StatelessWidget {
                         ),
                         Text(
                           post.location,
+                          maxLines: 2,
                           style: TextStyle(
                             fontFamily: 'HanguelNuri',
-                            fontSize: 30,
+                            fontSize: 20,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),

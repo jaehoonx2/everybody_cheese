@@ -5,6 +5,8 @@ class Post {
   final String authorID;
   final String imgURL;
   final String location;
+  final double longitude;
+  final double latitude;
   final String description;
   final String camera;
   final Timestamp taken;
@@ -18,12 +20,16 @@ class Post {
         assert(map['authorID'] != null),
         assert(map['imgURL'] != null),
         assert(map['location'] != null),
+        assert(map['longitude'] != null),
+        assert(map['latitude'] != null),
         assert(map['description'] != null),
         assert(map['votes'] != null),
         docID = map['docID'],
         authorID = map['authorID'],
         imgURL = map['imgURL'],
         location = map['location'],
+        longitude = map['longitude'],
+        latitude = map['latitude'],
         description = map['description'],
         camera = map['camera'],
         taken = map['taken'],

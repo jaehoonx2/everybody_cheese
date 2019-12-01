@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 
+import 'package:flutter/material.dart' as prefix0;
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +11,7 @@ import 'package:device_info/device_info.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:path/path.dart' as Path;
+import 'package:geolocator/geolocator.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -89,7 +91,43 @@ class _UploadPageState extends State<UploadPage> {
   var _finish;
   FirebaseUser user;
 
-  final locationController = TextEditingController();
+  // Start of the geolocator
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+  Position _currentPosition;
+  String _currentAddress;
+
+  _getCurrentLocation() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+
+      _getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> p = await geolocator.placemarkFromCoordinates(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      Placemark place = p[0];
+
+      setState(() {
+        _currentAddress =
+        "${place.locality}, ${place.postalCode}, ${place.country}";
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+  // End of the geolocator
+
   final descController = TextEditingController();
   final camController = TextEditingController();
 
@@ -111,6 +149,8 @@ class _UploadPageState extends State<UploadPage> {
       _getGalleryImage().then((mode) {
         setState(() {});
       });
+
+      _getCurrentLocation();
     }
 
     _getUserInfo().then((finish) {
@@ -200,7 +240,7 @@ class _UploadPageState extends State<UploadPage> {
               style: TextStyle(fontSize: 15.0, fontFamily: 'RoundedElegance'),
             ),
             onPressed: () async {
-              if (locationController.text.isNotEmpty &&
+              if (_currentAddress.isNotEmpty &&
                   descController.text.isNotEmpty &&
                   camController.text.isNotEmpty) {
                 await _getImageURL();
@@ -209,7 +249,9 @@ class _UploadPageState extends State<UploadPage> {
                   final collRef = Firestore.instance.collection('posts');
                   DocumentReference docReferance = collRef.document();
                   docReferance.setData({
-                    'location': locationController.text,
+                    'location': _currentAddress,
+                    'longitude': _currentPosition.longitude,
+                    'latitude': _currentPosition.latitude,
                     'description': descController.text,
                     'camera': camController.text,
                     'imgURL': _imageURL,
@@ -226,7 +268,6 @@ class _UploadPageState extends State<UploadPage> {
 
                   _image = null;
                   await _getImageURL();
-                  locationController.clear();
                   camController.clear();
                   descController.clear();
                 } else {
@@ -258,8 +299,7 @@ class _UploadPageState extends State<UploadPage> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
                 children: <Widget>[
                   Column(
                     children: <Widget>[
@@ -271,27 +311,37 @@ class _UploadPageState extends State<UploadPage> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      Row(
-                        children: <Widget>[
-                          SignInButtonBuilder(
+                      Padding(
+                        padding: prefix0.EdgeInsets.only(left: 30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            SignInButtonBuilder(
                               mini: true,
-                              icon: Icons.location_on,
+                              icon: _mode == 0 ? Icons.my_location : Icons.location_on,
                               text: 'Location',
                               backgroundColor: Colors.blue,
-                              onPressed: () {},
-                          ),
-                          Text(
-                            'under the development',
-                            style: TextStyle(
-                              fontFamily: 'RoundedElegance',
-                              fontSize: 10.0,
+                              onPressed: () async {
+//                                if(_mode == 0)
+                                  await _getCurrentLocation();
+//                                else {
+//
+//                                }
+                              }
                             ),
-                          ),
-                        ],
+                            Text(
+                              _currentPosition != null ? _currentAddress : (_mode == 0 ? 'Current Location' : 'Select Location'),
+                              style: TextStyle(
+                                fontFamily: 'RoundedElegance',
+                                fontSize: 10.0,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(width: 10.0,),
+                  SizedBox(width: 20.0,),
                   Column(
                     children: <Widget>[
                       Text(
@@ -302,38 +352,33 @@ class _UploadPageState extends State<UploadPage> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      Row(
-                        children: <Widget>[
-                          SignInButtonBuilder(
-                              mini: true,
-                              icon: Icons.calendar_today,
-                              text: 'Calendar',
-                              backgroundColor: Colors.blue,
-                              onPressed: () => _setTakenDate(context)),
-                          Text(
-                            formatter.format(_takenDate),
-                            style: TextStyle(
-                              fontFamily: 'RoundedElegance',
-                              fontSize: 10.0,
+                      Padding(
+                        padding: prefix0.EdgeInsets.only(left: 30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            SignInButtonBuilder(
+                                mini: true,
+                                icon: Icons.calendar_today,
+                                text: 'Calendar',
+                                backgroundColor: Colors.blue,
+                                onPressed: () => _setTakenDate(context)),
+                            Text(
+                              formatter.format(_takenDate),
+                              style: TextStyle(
+                                fontFamily: 'RoundedElegance',
+                                fontSize: 10.0,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: false,
-                  labelText: '어디서 찍은 사진인가요?',
-                ),
-                controller: locationController,
-              ),
-            ),
+            SizedBox(width: 20.0,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: TextField(
@@ -344,6 +389,7 @@ class _UploadPageState extends State<UploadPage> {
                 controller: camController,
               ),
             ),
+            SizedBox(width: 20.0,),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0),
               child: TextField(
