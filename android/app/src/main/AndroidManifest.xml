@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.handong.everybody_cheese">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <!-- Start of geolocator permission -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -14,6 +16,10 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="everybody_cheese"
         android:icon="@mipmap/ic_launcher">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC4wm0YAc7M5L0g5w305p1ZUjbujimsTiQ"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -24,7 +30,6 @@
             <meta-data
                 android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
                 android:value="true" />
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

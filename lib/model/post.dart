@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
+  final String title;
   final String docID;
   final String authorID;
   final String userEmail;
   final String imgURL;
   final String location;
-  final double longitude;
   final double latitude;
+  final double longitude;
   final String description;
   final String camera;
   final Timestamp taken;
@@ -17,7 +18,8 @@ class Post {
   final DocumentReference reference;
 
   Post.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['docID'] != null),
+      : assert(map['title'] != null),
+        assert(map['docID'] != null),
         assert(map['authorID'] != null),
         assert(map['userEmail'] != null),
         assert(map['imgURL'] != null),
@@ -26,13 +28,14 @@ class Post {
         assert(map['latitude'] != null),
         assert(map['description'] != null),
         assert(map['votes'] != null),
+        title = map['title'],
         docID = map['docID'],
         authorID = map['authorID'],
         userEmail = map['userEmail'],
         imgURL = map['imgURL'],
         location = map['location'],
-        longitude = map['longitude'],
         latitude = map['latitude'],
+        longitude = map['longitude'],
         description = map['description'],
         camera = map['camera'],
         taken = map['taken'],

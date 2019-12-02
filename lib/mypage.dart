@@ -89,6 +89,22 @@ class _MyPageState extends State<MyPage> {
                         SizedBox(height: 10.0),
                         Row(
                           children: <Widget>[
+                            Icon(Icons.title, color: theme.primaryColor,),
+                            Text(
+                              post.title,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                              style: TextStyle(
+                                fontFamily: 'HangeulNuri',
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10.0),
+                        Row(
+                          children: <Widget>[
                             Icon(Icons.location_on, color: theme.primaryColor,),
                             Flexible(
                               child: Text(
@@ -97,22 +113,8 @@ class _MyPageState extends State<MyPage> {
                                 softWrap: true,
                                 style: TextStyle(
                                   fontFamily: 'HangeulNuri',
-                                  fontSize: 10.0,
+                                  fontSize: 15.0,
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10.0),
-                        Row(
-                          children: <Widget>[
-                            Icon(Icons.camera_alt, color: theme.primaryColor,),
-                            Text(
-                              post.camera,
-                              style: TextStyle(
-                                fontFamily: 'HanguelNuri',
-                                fontSize: 13.0,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],
@@ -123,8 +125,10 @@ class _MyPageState extends State<MyPage> {
                             Icon(Icons.favorite, color: Colors.red,),
                             Text(
                               post.votes.toString(),
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
                               style: TextStyle(
-                                fontFamily: 'HanguelNuri',
+                                fontFamily: 'HangeulNuri',
                                 fontSize: 15.0,
                               ),
                             ),

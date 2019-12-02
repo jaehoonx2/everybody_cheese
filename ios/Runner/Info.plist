@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <!-- Google Maps Flutter Section -->
+    <key>io.flutter.embedded_views_preview</key>
+    <string>YES</string>
+    <!-- End of the Google Maps Flutter Section -->
+
     <!-- Geolocator Section -->
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>This app needs access to location when open.</string>

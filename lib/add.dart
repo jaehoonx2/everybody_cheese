@@ -94,7 +94,6 @@ class UploadPage extends StatefulWidget {
 
 class _UploadPageState extends State<UploadPage> {
   int _mode;
-  var _finish;
   FirebaseUser user;
 
   Position _currentPosition;
@@ -146,18 +145,17 @@ class _UploadPageState extends State<UploadPage> {
 
       var address = await Geocoder.local.findAddressesFromQuery(p.description);
 
-      setState(() {
-        _currentAddress = p.description;
-        _currentPosition = Position(latitude: lat, longitude: lng);
-      });
-
-//      print(p.description);
-//      print(lat);
-//      print(lng);
+      if(lat != null && lng != null) {
+        setState(() {
+          _currentAddress = p.description;
+          _currentPosition = Position(latitude: lat, longitude: lng);
+        });
+      }
     }
   }
   // End of the flutter_google_places
 
+  final titleController = TextEditingController();
   final descController = TextEditingController();
   final camController = TextEditingController();
 
@@ -187,9 +185,7 @@ class _UploadPageState extends State<UploadPage> {
     }
 
     _getUserInfo().then((finish) {
-      setState(() {
-        _finish = finish;
-      });
+      setState(() {});
     });
   }
 
@@ -217,7 +213,8 @@ class _UploadPageState extends State<UploadPage> {
 
     setState(() {
       _image = image;
-      camController.text = _device;
+      if(_mode == 0)
+        camController.text = _device;
       print('Image Path $_image');
     });
   }
@@ -274,6 +271,7 @@ class _UploadPageState extends State<UploadPage> {
             ),
             onPressed: () async {
               if (_currentAddress.isNotEmpty &&
+                  titleController.text.isNotEmpty &&
                   descController.text.isNotEmpty &&
                   camController.text.isNotEmpty) {
                 await _getImageURL();
@@ -282,6 +280,7 @@ class _UploadPageState extends State<UploadPage> {
                   final collRef = Firestore.instance.collection('posts');
                   DocumentReference docReferance = collRef.document();
                   docReferance.setData({
+                    'title': titleController.text,
                     'location': _currentAddress,
                     'longitude': _currentPosition.longitude,
                     'latitude': _currentPosition.latitude,
@@ -293,15 +292,14 @@ class _UploadPageState extends State<UploadPage> {
                     'authorID': user.uid,
                     'taken': Timestamp.fromDate(_takenDate),
                     'votes': 0,
-                    'clickedID': [
-                      null,
-                    ],
+                    'clickedID': [null,],
                   });
 
                   print('success');
 
                   _image = null;
                   await _getImageURL();
+                  titleController.clear();
                   camController.clear();
                   descController.clear();
                 } else {
@@ -354,14 +352,9 @@ class _UploadPageState extends State<UploadPage> {
                             if(_mode == 0)
                               await _getCurrentLocation();
                             else {
-                              // IOS --> error occured
-                              if(Platform.isAndroid){
                                 Prediction p = await PlacesAutocomplete.show(
                                     context: context, apiKey: kGoogleApiKey);
                                 displayPrediction(p);
-                              } else {
-                                await _getCurrentLocation();
-                              }
                             }
                           }
                       ),
@@ -404,6 +397,17 @@ class _UploadPageState extends State<UploadPage> {
                     ],
                   ),
                 ],
+              ),
+            ),
+            SizedBox(width: 20.0,),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 25.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  filled: false,
+                  labelText: '사진 제목은 무엇인가요?',
+                ),
+                controller: titleController,
               ),
             ),
             SizedBox(width: 20.0,),

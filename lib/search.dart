@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:everybody_cheese/key.dart';
+import 'package:everybody_cheese/map.dart';
 
 // const kGoogleApiKey is in key.dart
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
@@ -16,62 +17,36 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  Position _targetPosition;
-  String _targetAddress;
-
-  // Start of the geolocator
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+  Position _targetPosition = Position(latitude: 0, longitude: 0);
 
-  _getCurrentLocation() {
-    geolocator
+  Future<Null> getMyLocation() async {
+    await geolocator
         .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
       setState(() {
         _targetPosition = position;
       });
-
-      _getAddressFromLatLng();
     }).catchError((e) {
       print(e);
     });
   }
 
-  _getAddressFromLatLng() async {
-    try {
-      List<Placemark> p = await geolocator.placemarkFromCoordinates(
-          _targetPosition.latitude, _targetPosition.longitude);
-
-      Placemark place = p[0];
-
-      setState(() {
-        _targetAddress =
-        "${place.locality}, ${place.postalCode}, ${place.country}";
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-  // End of the geolocator
-
-  // Start of the flutter_google_places
   Future<Null> displayPrediction(Prediction p) async {
     if (p != null) {
       PlacesDetailsResponse detail =
       await _places.getDetailsByPlaceId(p.placeId);
 
-      var placeId = p.placeId;
       double lat = detail.result.geometry.location.lat;
       double lng = detail.result.geometry.location.lng;
 
-      var address = await Geocoder.local.findAddressesFromQuery(p.description);
-
-      setState(() {
-        _targetAddress = p.description;
-        _targetPosition = Position(latitude: lat, longitude: lng);
-      });
+      if(lat != null && lng != null){
+        setState(() {
+          _targetPosition = Position(latitude: lat, longitude: lng);
+        });
+      }
     }
   }
-  // End of the flutter_google_places
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +86,13 @@ class _SearchPageState extends State<SearchPage> {
                   onPressed: () async {
                     Prediction p = await PlacesAutocomplete.show(
                         context: context, apiKey: kGoogleApiKey);
-                    displayPrediction(p);
+                    displayPrediction(p).then((onValue){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MapPage(position: _targetPosition)),
+                      );
+                    });
                   },
                   backgroundColor: Colors.blue,
                   width: 160.0,
@@ -121,7 +102,13 @@ class _SearchPageState extends State<SearchPage> {
                   text: '내 주변 명소 찾기',
                   icon: Icons.my_location,
                   onPressed: () async {
-                    await _getCurrentLocation();
+                    getMyLocation().then((onValue){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MapPage(position: _targetPosition)),
+                      );
+                    });
                   },
                   backgroundColor: Colors.blue,
                   width: 160.0,

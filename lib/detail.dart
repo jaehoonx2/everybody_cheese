@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +30,10 @@ class DetailPage extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('posts').where('docID', isEqualTo: post.docID).snapshots(),
+      stream: Firestore.instance
+          .collection('posts')
+          .where('docID', isEqualTo: post.docID)
+          .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
 
@@ -60,37 +64,28 @@ class DetailPage extends StatelessWidget {
               child: Image.network(post.imgURL),
             ),
           ),
-          SizedBox(height: 3.0),
           Container(
-            padding: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
             child: Row(
               children: <Widget>[
                 Flexible(
-                  child: Align(
-                    child: Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.location_on,
-                          size: 20.0,
-                        ),
-                        SizedBox(width: 10.0,),
-                        Flexible(
-                          child: Text(
-                            post.location,
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: true,
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontFamily: 'HanguelNuri',
-                              fontSize: 15.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
+                  child: Row(
+                    children: <Widget>[
+                      Icon(Icons.title, size: 25.0,),
+                      SizedBox(width: 10.0,),
+                      Flexible(
+                        child: Text(
+                          post.title,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          style: TextStyle(
+                            fontFamily: 'HangeulNuri',
+                            fontSize: 25.0,
+                            color: Colors.black,
                           ),
                         ),
-                      ],
-                    ),
-                    alignment: Alignment.centerLeft,
+                      ),
+                    ],
                   ),
                 ),
                 Align(
@@ -103,26 +98,28 @@ class DetailPage extends StatelessWidget {
           SizedBox(height: 3.0),
           Container(
             padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-            alignment: Alignment.topLeft,
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Icon(
-                  Icons.calendar_today,
-                  size: 15.0,
-                ),
+                Icon(Icons.location_on, size: 25.0,),
                 SizedBox(width: 10.0,),
-                Text(
-                  ' ' + formatter.format(post.taken.toDate()),
-                  style: TextStyle(
-                    fontFamily: 'HanguelNuri',
-                    fontSize: 13.0,
-                    color: Colors.black,
+                Flexible(
+                  child: Text(
+                    post.location,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontFamily: 'HangeulNuri',
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
+          SizedBox(height: 3.0),
           Container(
             padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
             child: Align(
@@ -130,21 +127,29 @@ class DetailPage extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Text(
-                    'Photographer: ',
+                    'Taken by',
                     style: TextStyle(
-                      fontFamily: 'HanguelNuri',
-                      fontSize: 13.0,
+                      fontFamily: 'RoundedElegance',
+                      fontSize: 15.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(width: 10.0,),
                   Text(
                     post.userEmail,
-                    style: theme.textTheme.caption,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontFamily: 'HangeulNuri',
+                      fontSize: 13.0,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
+          SizedBox(height: 3.0),
           Divider(
             indent: 30,
             endIndent: 30,
@@ -154,13 +159,35 @@ class DetailPage extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
             alignment: Alignment.topLeft,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Icon( Icons.calendar_today),
+                SizedBox(width: 10.0,),
+                Text(
+                  formatter.format(post.taken.toDate()),
+                  style: TextStyle(
+                    fontFamily: 'HangeulNuri',
+                    fontSize: 13.0,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 3.0),
+          Container(
+            padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
+            alignment: Alignment.topLeft,
+            child: Row(
               children: <Widget>[
                 Icon(Icons.camera_alt),
-                SizedBox(width: 10.0,),
+                SizedBox(
+                  width: 10.0,
+                ),
                 Text(
                   post.camera,
                   style: TextStyle(
-                    fontFamily: 'RoundedElegance',
+                    fontFamily: 'HangeulNuri',
                     fontSize: 13,
                     color: Colors.black,
                   ),
@@ -168,13 +195,16 @@ class DetailPage extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 3.0),
           Container(
-            padding: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
+            padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
             alignment: Alignment.topLeft,
             child: Row(
               children: <Widget>[
                 Icon(Icons.note),
-                SizedBox(width: 10.0,),
+                SizedBox(
+                  width: 10.0,
+                ),
                 Text(
                   '촬영 기법 및 팁',
                   style: TextStyle(
@@ -187,14 +217,15 @@ class DetailPage extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(height: 3.0),
           Container(
             padding: const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
             alignment: Alignment.topLeft,
             child: Text(
               post.description,
               style: TextStyle(
-                fontFamily: 'HanguelNuri',
-                fontSize: 13,
+                fontFamily: 'HangeulNuri',
+                fontSize: 15,
                 color: Colors.black,
               ),
             ),
@@ -221,25 +252,27 @@ class DetailPage extends StatelessWidget {
                     final FirebaseUser currentUser = await _auth.currentUser();
                     String uuid = currentUser.uid;
 
-                    for(int idx = 0; idx < post.clickedID.length; idx++) {
-                      if(uuid == post.clickedID[idx]){
+                    for (int idx = 0; idx < post.clickedID.length; idx++) {
+                      if (uuid == post.clickedID[idx]) {
                         alreadySaved = true;
                         break;
                       }
                     }
 
-                    if(alreadySaved == false) {   // 처음 누르는 거면
+                    if (alreadySaved == false) {
+                      // 처음 누르는 거면
                       var list = List<dynamic>();
                       list.add(uuid);
 
                       post.reference.updateData({
                         'votes': FieldValue.increment(1),
-                        'clickedID' : FieldValue.arrayUnion(list),
+                        'clickedID': FieldValue.arrayUnion(list),
                       });
 
-                      Scaffold.of(context).showSnackBar(
-                          SnackBar(content: Text('좋아요를 눌렀습니다.')));
-                    } else {                      // 아니면
+                      Scaffold.of(context)
+                          .showSnackBar(SnackBar(content: Text('좋아요를 눌렀습니다.')));
+                    } else {
+                      // 아니면
                       Scaffold.of(context).showSnackBar(
                           SnackBar(content: Text('한번만 클릭할 수 있습니다.')));
                     }

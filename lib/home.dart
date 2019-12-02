@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       stream: stream,
       builder: (context, snapshot) {
         if (!snapshot.hasData)
-          return CircularProgressIndicator();
+          return LinearProgressIndicator();
 
         return _buildSlider(context, snapshot.data.documents);
       },
@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                    '베스트 사진전',
+                    '명예의 전당',
                     style: TextStyle(
                       fontFamily: 'HangeulNuri',
                       fontSize: 25.0,
@@ -204,11 +204,20 @@ class _HomePageState extends State<HomePage> {
               _buildBody(context),
               SizedBox(height: 20.0),
               Text(
-                '가장 멋진 사진에 투표하세요!',
+                '베스트 사진작가는 누구?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'HangeulNuri',
                   fontSize: 25.0,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              Text(
+                '좋아요를 일정수 이상 획득한 사진들에 대해 진행합니다.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'HangeulNuri',
+                  fontSize: 10.0,
                   fontWeight: FontWeight.w400,
                 ),
               ),
