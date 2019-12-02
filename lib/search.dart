@@ -5,8 +5,9 @@ import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
+import 'package:everybody_cheese/key.dart';
 
-const kGoogleApiKey = "AIzaSyAlIfxVG_5_XUbqWbRMBZ8D-0v_2UX2sy0";
+// const kGoogleApiKey is in key.dart
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class SearchPage extends StatefulWidget {

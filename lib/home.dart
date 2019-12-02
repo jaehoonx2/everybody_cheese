@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       stream: stream,
       builder: (context, snapshot) {
         if (!snapshot.hasData)
-          return LinearProgressIndicator();
+          return CircularProgressIndicator();
 
         return _buildSlider(context, snapshot.data.documents);
       },
@@ -178,15 +178,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              SizedBox(height: 50.0),
+              SizedBox(height: 35.0),
               _buildBody(context),
-              SizedBox(height: 50.0),
+              SizedBox(height: 35.0),
               Text(
                 '가장 멋진 사진에 투표하세요!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontFamily: 'HangeulNuri',
-                  fontSize: 28.0,
+                  fontSize: 25.0,
                   fontWeight: FontWeight.w400,
                 ),
               ),

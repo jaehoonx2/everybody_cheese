@@ -14,13 +14,14 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart' as Path;
+import 'package:everybody_cheese/key.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 DateTime _takenDate = DateTime.now();
 final formatter = new DateFormat('yyyy.MM.dd (E)');
 
-const kGoogleApiKey = "AIzaSyAlIfxVG_5_XUbqWbRMBZ8D-0v_2UX2sy0";
+// const kGoogleApiKey is in key.dart
 GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: kGoogleApiKey);
 
 class AddPage extends StatelessWidget {
