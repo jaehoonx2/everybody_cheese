@@ -73,6 +73,7 @@ class DetailPage extends StatelessWidget {
                           Icons.location_on,
                           size: 20.0,
                         ),
+                        SizedBox(width: 10.0,),
                         Flexible(
                           child: Text(
                             post.location,
@@ -108,13 +109,14 @@ class DetailPage extends StatelessWidget {
               children: <Widget>[
                 Icon(
                   Icons.calendar_today,
-                  size: 20.0,
+                  size: 15.0,
                 ),
+                SizedBox(width: 10.0,),
                 Text(
                   ' ' + formatter.format(post.taken.toDate()),
                   style: TextStyle(
                     fontFamily: 'HanguelNuri',
-                    fontSize: 20,
+                    fontSize: 13.0,
                     color: Colors.black,
                   ),
                 ),
@@ -128,10 +130,10 @@ class DetailPage extends StatelessWidget {
               child: Row(
                 children: <Widget>[
                   Text(
-                    'Creator: ',
+                    'Photographer: ',
                     style: TextStyle(
                       fontFamily: 'HanguelNuri',
-                      fontSize: 12,
+                      fontSize: 13.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -154,6 +156,7 @@ class DetailPage extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Icon(Icons.camera_alt),
+                SizedBox(width: 10.0,),
                 Text(
                   post.camera,
                   style: TextStyle(
@@ -168,14 +171,20 @@ class DetailPage extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(30.0, 20.0, 30.0, 0.0),
             alignment: Alignment.topLeft,
-            child: Text(
-              'How to take?',
-              style: TextStyle(
-                fontFamily: 'RoundedElegance',
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.note),
+                SizedBox(width: 10.0,),
+                Text(
+                  '촬영 기법 및 팁',
+                  style: TextStyle(
+                    fontFamily: 'HangeulNuri',
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
             ),
           ),
           Container(
@@ -185,7 +194,7 @@ class DetailPage extends StatelessWidget {
               post.description,
               style: TextStyle(
                 fontFamily: 'HanguelNuri',
-                fontSize: 15,
+                fontSize: 13,
                 color: Colors.black,
               ),
             ),
@@ -229,10 +238,10 @@ class DetailPage extends StatelessWidget {
                       });
 
                       Scaffold.of(context).showSnackBar(
-                          SnackBar(content: Text('I LIKE IT!!!')));
+                          SnackBar(content: Text('좋아요를 눌렀습니다.')));
                     } else {                      // 아니면
                       Scaffold.of(context).showSnackBar(
-                          SnackBar(content: Text('You can only do it once!!!')));
+                          SnackBar(content: Text('한번만 클릭할 수 있습니다.')));
                     }
                   }),
               Text(post.votes.toString()),

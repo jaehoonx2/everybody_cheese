@@ -2,7 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'model/post.dart';
+import 'package:everybody_cheese/detail.dart';
+import 'package:everybody_cheese/model/post.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -35,6 +36,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Route _createRoute(Post post) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => DetailPage(post: post,),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(0.0, 1.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   Widget _buildSlider(BuildContext context, List<DocumentSnapshot> snapshot) {
     List<Post> imgList = snapshot.map((data)=>_buildPosts(context, data)).toList();
 
@@ -57,7 +76,10 @@ class _HomePageState extends State<HomePage> {
                 child: Stack(
                   children: <Widget>[
                     Container(
-                      child: Image.network(post.imgURL, fit: BoxFit.cover, width: 1000.0,),
+                      child: GestureDetector(
+                        child: Image.network(post.imgURL, fit: BoxFit.cover, width: 1000.0,),
+                        onTap: () => Navigator.of(context).push(_createRoute(post)),
+                      ),
                     ),
                     FittedBox(
                       child: Row(
@@ -79,7 +101,6 @@ class _HomePageState extends State<HomePage> {
                                         break;
                                       }
                                     }
-
                                     if(alreadySaved == false) {   // 처음 누르는 거면
                                       var list = List<dynamic>();
                                       list.add(uuid);
@@ -90,10 +111,10 @@ class _HomePageState extends State<HomePage> {
                                       });
 
                                       Scaffold.of(context).showSnackBar(
-                                          SnackBar(content: Text('I LIKE IT!!!')));
+                                          SnackBar(content: Text('좋아요를 눌렀습니다.')));
                                     } else {                      // 아니면
                                       Scaffold.of(context).showSnackBar(
-                                          SnackBar(content: Text('You can only do it once!!!')));
+                                          SnackBar(content: Text('한번만 클릭할 수 있습니다.')));
                                     }
                                   }),
                               Text(
@@ -126,6 +147,7 @@ class _HomePageState extends State<HomePage> {
                             post.location,
                             style: TextStyle(
                               color: Colors.white,
+                              fontFamily: 'HangeulNuri',
                               fontSize: 10.0,
                               fontWeight: FontWeight.bold,
                             )
@@ -178,9 +200,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              SizedBox(height: 35.0),
+              SizedBox(height: 20.0),
               _buildBody(context),
-              SizedBox(height: 35.0),
+              SizedBox(height: 20.0),
               Text(
                 '가장 멋진 사진에 투표하세요!',
                 textAlign: TextAlign.center,
