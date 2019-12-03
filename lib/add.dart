@@ -139,11 +139,11 @@ class _UploadPageState extends State<UploadPage> {
       PlacesDetailsResponse detail =
       await _places.getDetailsByPlaceId(p.placeId);
 
-      var placeId = p.placeId;
+//       var placeId = p.placeId;
       double lat = detail.result.geometry.location.lat;
       double lng = detail.result.geometry.location.lng;
 
-      var address = await Geocoder.local.findAddressesFromQuery(p.description);
+//       var address = await Geocoder.local.findAddressesFromQuery(p.description);
 
       if(lat != null && lng != null) {
         setState(() {
