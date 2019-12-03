@@ -12,7 +12,6 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  var _finish;
   var stream;
   FirebaseUser user;
 
@@ -23,7 +22,6 @@ class _MyPageState extends State<MyPage> {
     _getUserInfo().then((finish) {
       setState(() {
         stream = Firestore.instance.collection('posts').where('authorID', isEqualTo: user.uid).snapshots();
-        _finish = finish;
       });
     });
   }

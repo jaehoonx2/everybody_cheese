@@ -22,7 +22,8 @@ class RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Form(
+        maintainBottomViewPadding: true,
+        child: Form(
             key: _formKey,
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 20.0),

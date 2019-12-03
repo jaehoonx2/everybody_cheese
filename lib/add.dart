@@ -312,127 +312,129 @@ class _UploadPageState extends State<UploadPage> {
           ),
         ],
       ),
-      resizeToAvoidBottomPadding: false,
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            SizedBox(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 3,
-              child: _image != null
-                  ? Image.file(_image)
-                  : Image.asset('assets/logo.png'),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: IconButton(
-                  icon: Icon(Icons.camera_alt), onPressed: _getGalleryImage),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    '어디서 찍으셨나요?',
-                    style: TextStyle(
-                      fontFamily: 'HangeulNuri',
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w700,
+      body: SafeArea(
+        maintainBottomViewPadding: true,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 3,
+                child: _image != null
+                    ? Image.file(_image)
+                    : Image.asset('assets/logo.png'),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: IconButton(
+                    icon: Icon(Icons.camera_alt), onPressed: _getGalleryImage),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      '어디서 찍으셨나요?',
+                      style: TextStyle(
+                        fontFamily: 'HangeulNuri',
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                  Row(
-                    children: <Widget>[
-                      SignInButtonBuilder(
-                          mini: true,
-                          icon: Icons.location_on,
-                          text: 'Location',
-                          backgroundColor: Colors.blue,
-                          onPressed: () async {
-                            if(_mode == 0)
-                              await _getCurrentLocation();
-                            else {
+                    Row(
+                      children: <Widget>[
+                        SignInButtonBuilder(
+                            mini: true,
+                            icon: Icons.location_on,
+                            text: 'Location',
+                            backgroundColor: Colors.blue,
+                            onPressed: () async {
+                              if(_mode == 0)
+                                await _getCurrentLocation();
+                              else {
                                 Prediction p = await PlacesAutocomplete.show(
                                     context: context, apiKey: kGoogleApiKey);
                                 displayPrediction(p);
+                              }
                             }
-                          }
+                        ),
+                        Flexible(
+                          child: Text(
+                            _currentPosition != null ? _currentAddress : 'Select Location',
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            style: TextStyle(
+                              fontFamily: 'RoundedElegance',
+                              fontSize: 10.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '언제 찍으셨나요?',
+                      style: TextStyle(
+                        fontFamily: 'HangeulNuri',
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w700,
                       ),
-                      Flexible(
-                        child: Text(
-                          _currentPosition != null ? _currentAddress : 'Select Location',
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: true,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        SignInButtonBuilder(
+                            mini: true,
+                            icon: Icons.calendar_today,
+                            text: 'Calendar',
+                            backgroundColor: Colors.blue,
+                            onPressed: () => _setTakenDate(context)),
+                        Text(
+                          formatter.format(_takenDate),
                           style: TextStyle(
                             fontFamily: 'RoundedElegance',
                             fontSize: 10.0,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    '언제 찍으셨나요?',
-                    style: TextStyle(
-                      fontFamily: 'HangeulNuri',
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.w700,
+                      ],
                     ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 20.0,),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: false,
+                    labelText: '사진 제목은 무엇인가요?',
                   ),
-                  Row(
-                    children: <Widget>[
-                      SignInButtonBuilder(
-                          mini: true,
-                          icon: Icons.calendar_today,
-                          text: 'Calendar',
-                          backgroundColor: Colors.blue,
-                          onPressed: () => _setTakenDate(context)),
-                      Text(
-                        formatter.format(_takenDate),
-                        style: TextStyle(
-                          fontFamily: 'RoundedElegance',
-                          fontSize: 10.0,
-                        ),
-                      ),
-                    ],
+                  controller: titleController,
+                ),
+              ),
+              SizedBox(width: 20.0,),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: false,
+                    labelText: '촬영에 사용된 기종은 무엇인가요?',
                   ),
-                ],
-              ),
-            ),
-            SizedBox(width: 20.0,),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: false,
-                  labelText: '사진 제목은 무엇인가요?',
+                  controller: camController,
                 ),
-                controller: titleController,
               ),
-            ),
-            SizedBox(width: 20.0,),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: false,
-                  labelText: '촬영에 사용된 기종은 무엇인가요?',
+              SizedBox(width: 20.0,),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: false,
+                    labelText: '특별한 촬영방법이나 팁이 있으신가요?',
+                  ),
+                  controller: descController,
                 ),
-                controller: camController,
               ),
-            ),
-            SizedBox(width: 20.0,),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  filled: false,
-                  labelText: '특별한 촬영방법이나 팁이 있으신가요?',
-                ),
-                controller: descController,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

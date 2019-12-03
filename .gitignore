@@ -75,6 +75,3 @@
 # Firebase key files.
 **/android/app/google-services.json
 **/ios/Runner/GoogleService-Info.plist
-
-# Google API key file
-lib/key.dart

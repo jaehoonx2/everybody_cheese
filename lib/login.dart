@@ -27,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       body: SafeArea(
+        maintainBottomViewPadding: true,
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           children: <Widget>[
