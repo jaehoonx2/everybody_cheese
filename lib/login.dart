@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -13,6 +14,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final myController = TextEditingController();
+
+  @override
+  Future<void> resetPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -42,6 +50,70 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => RegisterPage()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('Forgot password?'),
+                FlatButton(
+                  child: Text(
+                    'Reset',
+                    style: TextStyle(
+                      color: theme.primaryColor,
+                    ),
+                  ),
+                  onPressed: () async {
+                    return showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(
+                            "가입하신 메일을 입력하세요.",
+                            style: TextStyle(
+                              fontFamily: 'HangeulNuri',
+                              color: Colors.black,
+                            ),
+                          ),
+                          content: TextField(controller: myController),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text(
+                                '인증',
+                                style: TextStyle(
+                                  fontFamily: 'HangeulNuri',
+                                  color: Colors.black,
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (myController.text.isNotEmpty) {
+                                  await resetPassword(myController.text);
+                                  myController.clear();
+                                  Navigator.of(context).pop();
+                                } else {
+                                  print('failed');
+                                }
+                              },
+                            ),
+                            FlatButton(
+                              child: Text(
+                                '취소',
+                                style: TextStyle(
+                                  fontFamily: 'HangeulNuri',
+                                  color: Colors.black,
+                                ),
+                              ),
+                              onPressed: () {
+                                myController.clear();
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
                 ),

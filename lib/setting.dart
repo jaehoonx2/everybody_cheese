@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'main.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -32,6 +31,11 @@ class _SettingPageState extends State<SettingPage> {
 
   void _signOut() async {
     await _auth.signOut();
+  }
+
+  @override
+  Future<void> resetPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
   }
 
   withdrawalAccount() async {
@@ -177,55 +181,7 @@ class _SettingPageState extends State<SettingPage> {
                             color: theme.primaryColor,
                           ),
                         ),
-                        onPressed: () {
-                          return showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text(
-                                  "닉네임을 설정해주세요.",
-                                  style: TextStyle(
-                                    fontFamily: 'HangeulNuri',
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                content: TextField(controller: myController),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    child: Text(
-                                        '설정',
-                                      style: TextStyle(
-                                        fontFamily: 'HangeulNuri',
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      if (myController.text.isNotEmpty) {
-                                        myController.clear();
-                                        Navigator.of(context).pop();
-                                      } else {
-                                        print('failed');
-                                      }
-                                    },
-                                  ),
-                                  FlatButton(
-                                    child: Text(
-                                      '취소',
-                                      style: TextStyle(
-                                        fontFamily: 'HangeulNuri',
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                        myController.clear();
-                                        Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
+                        onPressed: null,
                       ),
                     ],
                   ),
@@ -252,7 +208,56 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
                 ),
-                onTap: () async {},
+                onTap: () async {
+                  return showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          "가입하신 메일을 입력하세요.",
+                          style: TextStyle(
+                            fontFamily: 'HangeulNuri',
+                            color: Colors.black,
+                          ),
+                        ),
+                        content: TextField(controller: myController),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              '인증',
+                              style: TextStyle(
+                                fontFamily: 'HangeulNuri',
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () async {
+                              if (myController.text == user.email) {
+                                await resetPassword(myController.text);
+                                myController.clear();
+                                Navigator.of(context).pop();
+                              } else {
+                                print('failed');
+                              }
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              '취소',
+                              style: TextStyle(
+                                fontFamily: 'HangeulNuri',
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () {
+                              myController.clear();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
               ),
               GestureDetector(
                 child: Card(
