@@ -10,10 +10,8 @@
     <!-- Geolocator Section -->
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>This app needs access to location when open.</string>
-
     <key>NSLocationAlwaysUsageDescription</key>
     <string>This app needs access to location when in the background.</string>
-
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>This app needs access to location when open and in the background.</string>
     <!-- End of the Geolocator Section -->
@@ -35,8 +33,9 @@
             <string>Editor</string>
             <key>CFBundleURLSchemes</key>
             <array>
+                <!-- TODO Replace this value: -->
                 <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-                <string>com.googleusercontent.apps.459989513500-9p5b3tdfmj4ircvcn4tmtbq74rakgtlo</string>
+                <string>com.googleusercontent.apps.861823949799-vc35cprkp249096uujjn0vvnmcvjppkn</string>
             </array>
         </dict>
     </array>
