@@ -167,28 +167,28 @@ class _SettingPageState extends State<SettingPage> {
                 ),
               ),
               SizedBox(height: 30.0),
-              GestureDetector(
-                child: Card(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      FlatButton(
-                        child: Text(
-                          '프로필 사진 등록 / 변경',
-                          style: TextStyle(
-                            fontFamily: 'HangeulNuri',
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w400,
-                            color: theme.primaryColor,
-                          ),
-                        ),
-                        onPressed: null,
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: null,
-              ),
+//              GestureDetector(
+//                child: Card(
+//                  child: Row(
+//                    mainAxisAlignment: MainAxisAlignment.center,
+//                    children: <Widget>[
+//                      FlatButton(
+//                        child: Text(
+//                          '프로필 사진 등록 / 변경',
+//                          style: TextStyle(
+//                            fontFamily: 'HangeulNuri',
+//                            fontSize: 15.0,
+//                            fontWeight: FontWeight.w400,
+//                            color: theme.primaryColor,
+//                          ),
+//                        ),
+//                        onPressed: null,
+//                      ),
+//                    ],
+//                  ),
+//                ),
+//                onTap: null,
+//              ),
               GestureDetector(
                 child: Card(
                   child: Row(
