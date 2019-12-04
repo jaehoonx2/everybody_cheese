@@ -308,21 +308,58 @@ class _SettingPageState extends State<SettingPage> {
                     ],
                   ),
                 ),
-                onTap: () async {
-                  if (user == null) {
-                    print('No one has signed in.');
-                    return;
-                  }
+                onTap: () {
+                  return showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          "정말로 탈퇴하시겠습니까?",
+                          style: TextStyle(
+                            fontFamily: 'HangeulNuri',
+                            color: Colors.black,
+                          ),
+                        ),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text(
+                              '탈퇴',
+                              style: TextStyle(
+                                fontFamily: 'HangeulNuri',
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () async {
+                              if (user == null) {
+                                print('No one has signed in.');
+                                return;
+                              }
 
-                  withdrawalAccount();
-                  print('Withdrawal is done.');
+                              withdrawalAccount();
+                              print('Withdrawal is done.');
 
-                  // go to first
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EverybodyCheeseApp(),
-                      ));
+                              // go to first
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EverybodyCheeseApp(),
+                                  ));
+                            },
+                          ),
+                          FlatButton(
+                            child: Text(
+                              '취소',
+                              style: TextStyle(
+                                fontFamily: 'HangeulNuri',
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: () => Navigator.of(context).pop(),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
               ),
             ],
