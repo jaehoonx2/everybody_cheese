@@ -14,6 +14,7 @@ class RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmController = TextEditingController();
 
   bool _success;
   String _userEmail;
@@ -61,6 +62,17 @@ class RegisterPageState extends State<RegisterPage> {
                   },
                   obscureText: true,
                 ),
+                TextFormField(
+                  controller: _confirmController,
+                  decoration: const InputDecoration(labelText: 'Confirm Password'),
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Please enter the password again';
+                    }
+                    return null;
+                  },
+                  obscureText: true,
+                ),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   alignment: Alignment.center,
@@ -79,7 +91,8 @@ class RegisterPageState extends State<RegisterPage> {
                         text: 'Sign Up',
                         icon: Icons.person_add,
                         onPressed: () async {
-                          if (_formKey.currentState.validate()) {
+                          if (_passwordController.text == _confirmController.text
+                              && _formKey.currentState.validate()) {
                             _register();
                           }
                         },
