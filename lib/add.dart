@@ -8,7 +8,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:image_picker/image_picker.dart';
@@ -139,11 +138,8 @@ class _UploadPageState extends State<UploadPage> {
       PlacesDetailsResponse detail =
       await _places.getDetailsByPlaceId(p.placeId);
 
-//       var placeId = p.placeId;
       double lat = detail.result.geometry.location.lat;
       double lng = detail.result.geometry.location.lng;
-
-//       var address = await Geocoder.local.findAddressesFromQuery(p.description);
 
       if(lat != null && lng != null) {
         setState(() {
