@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     setState(() {
-      stream = Firestore.instance.collection('posts').where('votes', isGreaterThanOrEqualTo: 0).snapshots();
+      stream = Firestore.instance.collection('posts').where('votes', isGreaterThanOrEqualTo: 3).orderBy('votes', descending: true).snapshots();
     });
   }
 
