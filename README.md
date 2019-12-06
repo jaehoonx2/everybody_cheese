@@ -2,7 +2,23 @@
 
 <img src="https://github.com/jaehoonx2/everybody_cheese/blob/master/assets/logo_text.png?raw=true" width="400"/>
 
+## Introduction
+
 Final project of the Mobile App Development lecture for the second semester of 2019 at Handong Global Univ.
+
+Everybody Cheese is a location-based photo-sharing application.  
+It provides functions such as posting and sharing photos,  
+searching for photos by region, and searching for nearby attractions.
+
+[Introduction Video](https://youtu.be/IBG8-Rpqg-A)
+
+## Developer
+* [Jaehoon Jung 정재훈](https://github.com/jaehoonx2) jaehoonx2
+
+## Development Stack
+* Dart
+* Flutter
+* Firebase(Authentication, Database, Storage)
 
 ## Getting Started
 
@@ -25,4 +41,4 @@ const kGoogleApiKey = "YOUR KEY HERE";
 
 ### 3. iOS integrartion for google_sign_in
 Add the CFBundleURLTypes attributes below into the ```./ios/Runner/Info.plist```.
-Please follow [this](https://pub.dev/packages/google_sign_in#ios-integration).
+Please follow [this](https://pub.dev/packages/google_sign_in#ios-integration). 
